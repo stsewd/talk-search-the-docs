@@ -198,9 +198,7 @@
 
         <section>
           <h2>Indexing Process</h2>
-          <p class="fragment">
-          Parse configuration file
-          </p>
+          <p class="fragment">Parse configuration file</p>
           <div class="fragment">
             <p>↓</p>
             <p>Sphinx build → JSON metadata &amp; HTML</p>
@@ -213,6 +211,38 @@
             <p>↓</p>
             <p>JSON metadata → Remove navigation items → Searchable text</p>
           </div>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Parse the configuration file
+                that has all the information to build your docs
+                (and also search options!).
+              </li>
+              <li>
+                Sphinx build,
+                which generates all html pages from sources.
+                We install an extension hook into the process and dump some metainformation
+                about each page (title, main html content).
+                We also inject our embedded script to patch the search engine from Sphinx.
+                <a href="http://www.url.com" target="_blank">https://github.com/readthedocs/readthedocs-sphinx-ext</a>
+              </li>
+              <li>
+                Go through each html file and save it on our DB and set the given ranking and set it as ignore or not.
+              </li>
+              <li>
+                In a later step we go again over each html file,
+                and retrieve the jason metadata file,
+                and extract its html.
+                We parse the html to extract the searcheable text and index it into ES.
+              </li>
+              <li>
+                For MkDocs the process is almost the same,
+                but we don't use an extension to get the main content,
+                but we parse each html file instead.
+              </li>
+            </ul>
+          </aside>
         </section>
 
         <section>
@@ -221,7 +251,6 @@
 
         <section>
           <h2>What's next</h2>
-
           <ul>
             <li>Better results for partial terms</li>
             <li>Weight page views into results</li>
