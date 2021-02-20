@@ -1,265 +1,270 @@
 <!doctype html>
 <html>
 
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>Search the Docs</title>
+  <title>Search the Docs</title>
 
-    <link rel="stylesheet" href="dist/reset.css">
-    <link rel="stylesheet" href="dist/reveal.css">
-    <link rel="stylesheet" href="dist/theme/white.css" id="theme">
+  <link rel="stylesheet" href="dist/reset.css">
+  <link rel="stylesheet" href="dist/reveal.css">
+  <link rel="stylesheet" href="dist/theme/white.css" id="theme">
 
-    <!-- Theme used for syntax highlighted code -->
-    <link rel="stylesheet" href="plugin/highlight/github-gist.css" id="highlight-theme">
+  <!-- Theme used for syntax highlighted code -->
+  <link rel="stylesheet" href="plugin/highlight/github-gist.css" id="highlight-theme">
 
-    <!-- Fontawesome -->
-    <link rel="stylesheet" href="plugin/fontawesome/css/all.css">
-  </head>
+  <!-- Fontawesome -->
+  <link rel="stylesheet" href="plugin/fontawesome/css/all.css">
 
-  <body>
-    <div class="reveal">
-      <div class="slides">
-        <section class="center">
-          <h1>Search the Docs</h1>
-          <h3>Elastic Search at Read the Docs</h3>
-          <p>
+  <style type="text/css" media="screen">
+.red {
+  color: red;
+}
+
+.maybe {
+  color: #888;
+}
+  </style>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section class="center">
+        <h1>Search the Docs</h1>
+        <h3>Elastic Search at Read the Docs</h3>
+        <p>
+          <small>
+            Santos Gallegos
+            -
+            @stsewd
+            <a href="http://github.com/stsewd" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="http://twitter.com/stsewd" target="_blank"><i class="fab fa-twitter"></i></a>
+          </small>
+        </p>
+      </section>
+
+      <section>
+        <h2>$ whoami</h2>
+        <ul>
+          <li>Santos Gallegos</li>
+          <li>Read the Docs</li>
+          <li>Python developer (web)</li>
+          <li>@stsewd</li>
+        </ul>
+      </section>
+
+      <section>
+        <header style="align-items: center; display: flex; justify-content: center;">
+          <img height="100px" src="img/rtd.png" style="margin: 0px;" />
+          <h2>
+            About Read the Docs
+          </h2>
+        </header>
+        <ul>
+          <li>Build and host your documentation</li>
+          <li>
+            Created around 2010
+          </li>
+          <li>More than 100K projects</li>
+          <li>Extra features</li>
+          <li>
+            <a href="https://readthedocs.org/" target="_blank">https://readthedocs.org/</a>
+          </li>
+        </ul>
+
+        <p class="fragment">
+          <img height="150px" src="img/rtd-footer.png" />
+        </p>
+
+        <aside class="notes">
+          <ul>
+            <li>
+              A platform that allows you to built and host your documentation.
+              Versioning, translations, sub-projects, and more!
+            </li>
+            <li>Created by Eric Holscher and others</li>
+            <li>
+              More than hundred thousand OS projects.
+              Flask, tox, nox, pip, requests.
+              https://pip.pypa.io/en/stable/
+              https://www.sphinx-doc.org/en/master/
+            </li>
+            <li>
+              If you are a python dev,
+              chances are that you have already read docs hosted by rtd.
+            </li>
+            <li>
+              Easy to recognize by this version selector to the bottom right of pages.
+            </li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Server Side Search</h2>
+        <ul>
+          <li>
+            Better search experience
+          </li>
+          <li>
+            Sphinx, MkDocs (partially)
+          </li>
+          <li>
+            Search across sub-projects
+          </li>
+          <li>
+            Ranking and ignoring pages
+          </li>
+          <li>
+            API
+          </li>
+          <li>
+            <code>"exact match"</code> <code>prefix*</code> <code>fuzzy~2</code>
+          </li>
+        </ul>
+        <p>
+          <small>
+            <a href="https://docs.readthedocs.io/page/server-side-search.html"
+              target="_blank">https://docs.readthedocs.io/page/server-side-search.html</a>
+          </small>
+        </p>
+
+        <aside class="notes">
+          <ul>
+            <li>Better search experience inside and outside the docs pages</li>
+            <li>MkDocs integration is still experimental, let us know if you want to test it in your project!</li>
+            <li>Allows you to give priority to some pages over others, or ignore them from results</li>
+            <li>Simple query string syntax from ES</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>A brief history about search at RTD</h2>
+        <ul>
+          <li class="fragment">
+            <strong>2013</strong>
+            Rob Hudson
+            <a href="https://github.com/robhudson" target="_blank">@robhudson</a>
+            (<a href="https://github.com/readthedocs/readthedocs.org/pull/493" target="_blank">#493</a>)
+          </li>
+          <li class="fragment">
+            <strong>2018</strong>
+            Safwan Rahman
+            <a href="https://github.com/safwanrahman" target="_blank">@safwanrahman</a>
             <small>
-              Santos Gallegos
-              -
-              <a href="mailto:santos_g@outlook.com">
-                stsewd@protonmail.com
-              </a>
+              <a href="https://blog.readthedocs.com/search-improvements/"
+                target="_blank">https://blog.readthedocs.com/search-improvements/</a>
             </small>
-            <br>
+          </li>
+          <li class="fragment">
+            <strong>2019</strong>
+            Vaibhav Gupta
+            <a href="https://github.com/dojutsu-user" target="_blank">@dojutsu-user</a>
             <small>
-              @stsewd
-              <a href="http://github.com/stsewd" target="_blank"><i class="fab fa-github"></i></a>
-              <a href="http://twitter.com/stsewd" target="_blank"><i class="fab fa-twitter"></i></a>
+              <a href="https://blog.readthedocs.com/improved-search-and-search-as-you-type/"
+                target="_blank">https://blog.readthedocs.com/improved-search-and-search-as-you-type/</a>
             </small>
-          </p>
-        </section>
+          </li>
+          <li class="fragment">
+            <strong>2020 - 2021</strong>
+            Me!
+          </li>
+        </ul>
 
-        <section>
-          <h2>whoami</h2>
-          <ul>
-            <li>Santos Gallegos</li>
-            <li>Read the Docs</li>
-            <li>Python developer (web)</li>
-            <li>@stsewd</li>
-          </ul>
-        </section>
-
-        <section>
-          <header style="align-items: center; display: flex; justify-content: center;">
-            <img height="100px" src="img/rtd.png" style="margin: 0px;" />
-            <h2>
-              About Read the Docs
-            </h2>
-          </header>
+        <aside class="notes">
           <ul>
             <li>
-              Created around 2010
+              It was added around 2013, and improved from there.
+              RTD was an small team (2 at the time), we still are (5 now!).
+              It was working, so why touch it?
             </li>
-            <li>Build and host your documentation</li>
-            <li>More than 100K projects</li>
-            <li>Server Side Search</li>
             <li>
-              <a href="https://readthedocs.org/" target="_blank">https://readthedocs.org/</a>
+              Safwan participated as a google summer of code student.
+              Migrated ES from 1.3 (EOL 2016) to 6.x.
+              Simple query string syntax support,
+              improve results order,
+              and added some management commands for re-indexing with zero-downtime.
+              I joined the team that year!
+            </li>
+            <li>
+              Vaibhav, another google summer of code student.
+              Search as you type extension.
+              Results linking to specific sections.
+              Search analytics.
+              Helped a little with the migration to 7.x.
+            </li>
+            <li>
+              Stable API.
+              Improve the HTML parsing.
+              Support for MkDocs.
+              Ranking and ignore pages.
+              Search on multiple projects.
             </li>
           </ul>
+        </aside>
+      </section>
 
-          <p class="fragment">
-            <img height="150px" src="img/rtd-footer.png" />
-          </p>
+      <section>
+        <h2>Indexing Process</h2>
+        <p class="fragment">Parse configuration file</p>
+        <div class="fragment">
+          <p>↓</p>
+          <p>Sphinx build → JSON metadata &amp; HTML</p>
+        </div>
+        <div class="fragment">
+          <p>↓</p>
+          <p>Track files with their ignore &amp; ranking options</p>
+        </div>
+        <div class="fragment">
+          <p>↓</p>
+          <p>JSON metadata → Remove navigation items → Searchable text</p>
+        </div>
 
-          <aside class="notes">
-            <ul>
-              <li>Created by Eric Holscher and others</li>
-              <li>
-                A platform that allows you to built and host your documentation.
-                Versiosing, translations, subprojects, and more!
-              </li>
-              <li>
-                Flask, tox, nox, pip, requests.
-                https://pip.pypa.io/en/stable/
-                https://www.sphinx-doc.org/en/master/
-              </li>
-              <li>
-                If you are a python dev,
-                chances are that you have already read docs hosted by rtd.
-              </li>
-              <li>
-                Easy to recognize by this version selector to the bottom right of pages.
-              </li>
-            </ul>
-          </aside>
-        </section>
-
-        <section>
-          <h2>Server Side Search</h2>
+        <aside class="notes">
           <ul>
             <li>
-              Better search experience
+              Parse the configuration file
+              that has all the information to build your docs
+              (and also search options!).
             </li>
             <li>
-              Sphinx, MkDocs (partially)
+              Sphinx build,
+              which generates all html pages from sources.
+              We install an extension hook into the process and dump some meta-information
+              about each page (title, main html content).
+              We also inject our embedded script to patch the search engine from Sphinx.
+              <a href="http://www.url.com" target="_blank">https://github.com/readthedocs/readthedocs-sphinx-ext</a>
             </li>
             <li>
-              Search across subprojects
+              Go through each html file and save it on our DB and set the given ranking and set it as ignore or not.
             </li>
             <li>
-              Ranking and ignoring pages
+              In a later step we go again over each html file,
+              and retrieve the json metadata file,
+              and extract its html.
+              We parse the html to extract the searchable text and index it into ES.
             </li>
             <li>
-              API
-            </li>
-            <li>
-              <code>"exact match"</code> <code>prefix*</code> <code>fuzzy~2</code>
+              For MkDocs the process is almost the same,
+              but we don't use an extension to get the main content,
+              but we parse each html file instead.
             </li>
           </ul>
-          <p>
-            <small>
-              <a href="https://docs.readthedocs.io/page/server-side-search.html"
-                target="_blank">https://docs.readthedocs.io/page/server-side-search.html</a>
-            </small>
-          </p>
+        </aside>
+      </section>
 
-          <aside class="notes">
-            <ul>
-              <li>Better search experience inside and outside the docs pages</li>
-              <li>MkDocs integration is still experimental, let us know if you want to test it in your project!</li>
-              <li>Allows you to give priority to some pages over others, or ignore them from results</li>
-              <li>Simple query string syntax from ES</li>
-            </ul>
-          </aside>
-        </section>
+      <section>
+        <h2>Configuration File</h2>
+
+        <p>
+          <em>.readthedocs.yaml</em>
+        </p>
 
         <section>
-          <h2>A brief history about search at RTD</h2>
-          <ul>
-            <li class="fragment">
-              <strong>2013</strong>
-              Rob Hudson
-              <a href="https://github.com/robhudson" target="_blank">@robhudson</a>
-              (<a href="https://github.com/readthedocs/readthedocs.org/pull/493" target="_blank">#493</a>)
-            </li>
-            <li class="fragment">
-              <strong>2018</strong>
-              Safwan Rahman
-              <a href="https://github.com/safwanrahman" target="_blank">@safwanrahman</a>
-              <small>
-                <a href="https://blog.readthedocs.com/search-improvements/"
-                  target="_blank">https://blog.readthedocs.com/search-improvements/</a>
-              </small>
-            </li>
-            <li class="fragment">
-              <strong>2019</strong>
-              Vaibhav Gupta
-              <a href="https://github.com/dojutsu-user" target="_blank">@dojutsu-user</a>
-              <small>
-                <a href="https://blog.readthedocs.com/improved-search-and-search-as-you-type/"
-                  target="_blank">https://blog.readthedocs.com/improved-search-and-search-as-you-type/</a>
-              </small>
-            </li>
-            <li class="fragment">
-              <strong>2020 - 2021</strong>
-              Me!
-            </li>
-          </ul>
-
-          <aside class="notes">
-            <ul>
-              <li>
-                It was added around 2013, and improved from there.
-                RTD was an small team (2 at the time), we still are (5 now!).
-                It was working, so why touch it?
-              </li>
-              <li>
-                Safwan participated as a google summer of code student.
-                Migrated ES from 1.3 (EOL 2016) to 6.x.
-                Simple query string syntax support,
-                improve results order,
-                and added some management commands for re-indexing with zero-downtime.
-                I joined the team that year!
-              </li>
-              <li>
-                Vaibhav, another google summer of code student.
-                Search as you type extension.
-                Results linking to specific sections.
-                Search analytics.
-                Helped a little with the migration to 7.x.
-              </li>
-              <li>
-                Stable API.
-                Improve the HTML parsing.
-                Support for MkDocs.
-                Ranking and ingore pages.
-                Search on multiple projects.
-              </li>
-            </ul>
-          </aside>
-        </section>
-
-        <section>
-          <h2>Indexing Process</h2>
-          <p class="fragment">Parse configuration file</p>
-          <div class="fragment">
-            <p>↓</p>
-            <p>Sphinx build → JSON metadata &amp; HTML</p>
-          </div>
-          <div class="fragment">
-            <p>↓</p>
-            <p>Track files with their ignore &amp; ranking options</p>
-          </div>
-          <div class="fragment">
-            <p>↓</p>
-            <p>JSON metadata → Remove navigation items → Searchable text</p>
-          </div>
-
-          <aside class="notes">
-            <ul>
-              <li>
-                Parse the configuration file
-                that has all the information to build your docs
-                (and also search options!).
-              </li>
-              <li>
-                Sphinx build,
-                which generates all html pages from sources.
-                We install an extension hook into the process and dump some metainformation
-                about each page (title, main html content).
-                We also inject our embedded script to patch the search engine from Sphinx.
-                <a href="http://www.url.com" target="_blank">https://github.com/readthedocs/readthedocs-sphinx-ext</a>
-              </li>
-              <li>
-                Go through each html file and save it on our DB and set the given ranking and set it as ignore or not.
-              </li>
-              <li>
-                In a later step we go again over each html file,
-                and retrieve the jason metadata file,
-                and extract its html.
-                We parse the html to extract the searcheable text and index it into ES.
-              </li>
-              <li>
-                For MkDocs the process is almost the same,
-                but we don't use an extension to get the main content,
-                but we parse each html file instead.
-              </li>
-            </ul>
-          </aside>
-        </section>
-
-        <section>
-          <h2>Configuration File</h2>
-
-          <p>
-            <em>.readthedocs.yaml</em>
-          </p>
-
-          <section>
-            <pre><code class="hlyaml" data-trim>
+          <pre><code class="hlyaml" data-trim>
                 version: 2
                 sphinx:
                   configuration: docs/conf.py
@@ -276,13 +281,13 @@
                     - search.html
                     - 404.html
             </code></pre>
-            <small>
-              <a href="https://docs.readthedocs.io/page/config-file/v2.html"
-                target="_blank">https://docs.readthedocs.io/page/config-file/v2.html</a>
-            </small>
-          </section>
-          <section>
-            <pre><code class="hlyaml" data-trim>
+          <small>
+            <a href="https://docs.readthedocs.io/page/config-file/v2.html"
+              target="_blank">https://docs.readthedocs.io/page/config-file/v2.html</a>
+          </small>
+        </section>
+        <section>
+          <pre><code class="hlyaml" data-trim>
                 search:
                   ranking:
                     api/v1/*: -5
@@ -291,184 +296,295 @@
                     - search.html
                     - 404.html
             </code></pre>
-            <small>
-              <a href="https://docs.readthedocs.io/page/config-file/v2.html" target="_blank">
-                https://docs.readthedocs.io/page/config-file/v2.html
-              </a>
-            </small>
-          </section>
+          <small>
+            <a href="https://docs.readthedocs.io/page/config-file/v2.html" target="_blank">
+              https://docs.readthedocs.io/page/config-file/v2.html
+            </a>
+          </small>
+        </section>
+      </section>
+
+      <section>
+        <h2>Indexing the content</h2>
+        <p>
+        <ul>
+          <li>Get metadata from each file or the file itself</li>
+          <li>Extract searchable content based on heuristics</li>
+          <li>Remove navigation nodes and line numbers from code-blocks</li>
+          <li>Divide content into sections</li>
+        </ul>
+        </p>
+
+        <p>
+          <small>
+            <a href="https://github.com/readthedocs/readthedocs.org/blob/master/readthedocs/search/parsers.py"
+              target="_blank">
+              readthedocs/search/parsers.py
+            </a>
+          </small>
+          <br />
+          <small>
+            <a href="https://github.com/readthedocs/readthedocs.org/blob/master/readthedocs/search/documents.py"
+              target="_blank">readthedocs/search/documents.py</a>
+          </small>
+          <br />
+          <small>
+            <a href="https://docs.readthedocs.io/page/development/search-integration.html"
+              target="_blank">https://docs.readthedocs.io/page/development/search-integration.html</a>
+          </small>
+        </p>
+
+        <aside class="notes">
+          <ul>
+            <li>
+              For sphinx we use the json metadata file.
+              Show an example from search/tests/data/sphinx/in/page.json.
+            </li>
+            <li>
+              For MkDocs we are testing two ways: using a search index file and indexing from HTML files.
+            </li>
+            <li>
+              We extract the searchable content based on some heuristics like aria roles and html tags.
+              Identify the main node of the content, remove irrelevant content like navigation items.
+            </li>
+            <li>
+              Remove line numbers from code blocks
+            </li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h2>Ranking and ignoring pages</h2>
+        <p>
+          Painless script
+        </p>
+      </section>
+
+      <section>
+        <h2>Overriding the default search</h2>
+
+        <small>
+          <a href="https://docs.readthedocs.io/page/development/search-integration.html#overriding-the-default-search"
+            target="_blank">https://docs.readthedocs.io/page/development/search-integration.html#overriding-the-default-search</a>
+        </small>
+      </section>
+
+      <section>
+        <h2>API</h2>
+        <p>
+          Pagination, wrapper around ES.
+        </p>
+        <p>
+          <a href="https://docs.readthedocs.io/_/api/v2/search/?project=docs&version=latest&q=api" target="_blank">
+            https://docs.readthedocs.io/_/api/v2/search/?project=docs&version=latest&q=api
+          </a>
+        </p>
+        <small>
+          <a href="https://docs.readthedocs.io/page/server-side-search.html#api" target="_blank">
+            https://docs.readthedocs.io/page/server-side-search.html#api
+          </a>
+        </small>
+      </section>
+
+      <section class="center">
+        <h1>Problems</h1>
+        <small class="fragment">And solutions!</small>
+      </section>
+
+      <section>
+        <h2>Latency</h2>
+
+        <p>
+        <ul>
+          <li>
+            <s>ES cloud (AWS) → RTD app (Azure)</s>
+          </li>
+          <li>
+            ES cloud (Azure) → RTD app (Azure)
+          </li>
+        </ul>
+        </p>
+
+        <p>
+        <ul class="fragment">
+          <li>
+            <s>ES cloud (AWS zone B) → RTD app (AWS zone A)</s>
+          </li>
+          <li>
+            ES cloud (AWS zone A) → RTD app (AWS zone A)
+          </li>
+        </ul>
+        </p>
+
+        <aside class="notes">
+          <p>
+            .org was on azure, and ES was hosted on aws.
+            We have now migrated to AWS, so we migrated ES again to aws.
+            .com is on aws, ES was aws... but on a different zone!
+          </p>
+        </aside>
+      </section>
+
+      <section>
+        <h2>
+          Partial terms results
+        </h2>
+        <section>
+          <ul>
+            <li>
+              <span class="red">theme</span>,
+              <span class="red">theme</span>s,
+              t<span class="red">e</span>mes,
+              temes<span class="red">~1</span>
+            </li>
+            <li>
+              <span class="red">test</span>,
+              <span class="red">test</span>ing
+            </li>
+            <li>
+              python<span class="red">.*</span>,
+              <span class="red">*.</span>fail_on_warning
+            </li>
+            <li>
+              <span class="red">index</span>,
+              re<span class="red">index</span>,
+              <span class="red">index</span>ing,
+          </ul>
         </section>
 
         <section>
-          <h2>Indexing the content</h2>
-          <p>
           <ul>
-            <li>Get metadata from each file or the file itself</li>
-            <li>Extract searcheable content based on heuristics</li>
-            <li>Remove navigation nodes and line numbers from codeblocks</li>
-            <li>Divide content into sections</li>
-          </ul>
-          </p>
-
-          <p>
-            <small>
-              <a href="https://github.com/readthedocs/readthedocs.org/blob/master/readthedocs/search/parsers.py"
+            <li>
+              <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html"
                 target="_blank">
-                readthedocs/search/parsers.py
+                Simple query string query
+              </a>
+            </li>
+            <li>
+              <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html#fuzziness"
+                target="_blank">
+                Multi-match query (fuzziness AUTO:4,6)
+              </a>
+            </li>
+            <li>
+              <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-wildcard-query.html"
+                target="_blank">
+                Wildcard query
+              </a>
+            </li>
+          </ul>
+
+          <p>
+            <small>
+              <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/full-text-queries.html"
+                target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/current/full-text-queries.html</a>
+            </small>
+          </p>
+        </section>
+
+        <section>
+          <ul>
+            <li>Wildcard queries over <strong>Text fields</strong> can be slow...</li>
+            <li class="fragment">Wildcard queries over <strong>Wildcard fields</strong> are fast!</li>
+            <li class="fragment">
+              Wildcard or Text field?...
+            </li>
+            <li class="fragment">
+              Both! Multi fields
+              (<a href="https://github.com/readthedocs/readthedocs.org/pull/7613" target="_blank">#7613</a>)
+            </li>
+          </ul>
+          <p>
+            <small>
+              <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/keyword.html#wildcard-field-type"
+                target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/current/keyword.html#wildcard-field-type</a>
+            </small>
+          </p>
+        </section>
+
+      </section>
+
+      <section>
+        <h2>What's next?</h2>
+        <ul>
+          <li>
+            Better results for partial terms
+            <a href="https://github.com/readthedocs/readthedocs.org/pull/7613" target="_blank">#7613</a>
+          </li>
+          <li>
+            Weight page views into results
+            <a href="https://github.com/readthedocs/readthedocs.org/pull/7297" target="_blank">#7297</a>
+          </li>
+          <li class="maybe">
+            Better display for results from code blocks?
+            <a href="https://github.com/readthedocs/readthedocs.org/pull/7112" target="_blank">#7112</a>
+          </li>
+          <li class="maybe">Search for images and code snippets?</li>
+          <li class="maybe">Search by files patterns and other facets?</li>
+          <li class="maybe">Ignore and ranking per sections?</li>
+        </ul>
+      </section>
+
+      <section class="center">
+        <h3>Search the Docs with Read the Docs and Elastic Search</h3>
+        <footer class="footer">
+          <p>
+            <small class="text-center">
+              <a href="https://stsewd.dev/">
+                <span>
+                  More about me
+                </span>
+                <br />
+                <span>https://stsewd.dev/</span>
               </a>
             </small>
-            <br />
-            <small>
-              <a href="https://github.com/readthedocs/readthedocs.org/blob/master/readthedocs/search/documents.py"
-                target="_blank">readthedocs/search/documents.py</a>
+          </p>
+
+          <p>
+            <small class="text-center">
+              <a href="https://github.com/stsewd/talk-search-the-docs/">
+                <span>
+                  Source code at GitHub <i class="fas fa-code-branch"></i>
+                </span>
+                <br />
+                <span>https://github.com/stsewd/talk-search-the-docs/</span>
+              </a>
             </small>
-            <br />
+          </p>
+
+          <p>
             <small>
-              <a href="https://docs.readthedocs.io/page/development/search-integration.html"
-                target="_blank">https://docs.readthedocs.io/page/development/search-integration.html</a>
+              @stsewd
+              <a href="http://github.com/stsewd"><i class="fab fa-github"></i></a>
+              <a href="http://twitter.com/stsewd"><i class="fab fa-twitter"></i></a>
             </small>
           </p>
+        </footer>
 
-          <aside class="notes">
-            <ul>
-              <li>
-                For sphinx we use the json metadata file.
-                Show an example from search/tests/data/sphinx/in/page.json.
-              </li>
-              <li>
-                For MkDocs we are testing two ways: using a search index file and indexing from HTML files.
-              </li>
-              <li>
-                We extract the searcheable content based on some heuristics like aria roles and html tags.
-                Identify the main node of the content, remove irrelevant content like navigation items.
-              </li>
-              <li>
-                Remove line numbers from code blocks
-              </li>
-            </ul>
-          </aside>
-        </section>
-
-        <section>
-          <h2>Prioritizing and ignoring</h2>
-          <p>
-            Painless script
-          </p>
-        </section>
-
-        <section>
-          <h2>Overriding the default search</h2>
-
-          <small>
-            <a href="https://docs.readthedocs.io/page/development/search-integration.html#overriding-the-default-search"
-              target="_blank">https://docs.readthedocs.io/page/development/search-integration.html#overriding-the-default-search</a>
-          </small>
-        </section>
-
-        <section>
-          <h2>API</h2>
-          <p>
-            Pagination, wrapper around ES.
-          </p>
-          <p>
-            <a href="https://docs.readthedocs.io/_/api/v2/search/?project=docs&version=latest&q=api" target="_blank">
-              https://docs.readthedocs.io/_/api/v2/search/?project=docs&version=latest&q=api
-            </a>
-          </p>
-          <small>
-            <a href="https://docs.readthedocs.io/page/server-side-search.html#api" target="_blank">
-              https://docs.readthedocs.io/page/server-side-search.html#api
-            </a>
-          </small>
-        </section>
-
-        <section class="center">
-          <h1>Problems</h1>
-        </section>
-
-        <section>
-          <h2>
-            Partial Searches
-          </h2>
-          <p>
-            search for "theme", "themes", "temes~1"
-          </p>
-          <p>
-            Query is too slow
-          </p>
-        </section>
-
-        <section>
-          <h2>What's next</h2>
-          <ul>
-            <li>Better results for partial terms</li>
-            <li>Weight page views into results</li>
-            <li>Autosuggestions</li>
-            <li>Images, code snippets</li>
-            <li>Search by files patterns</li>
-            <li>Ignore and ranking per sections</li>
-          </ul>
-        </section>
-
-        <section class="center">
-          <h3>Search the Docs with Read the Docs and Elastic Search</h3>
-          <footer class="footer">
-            <p>
-              <small class="text-center">
-                <a href="https://stsewd.dev/">
-                  <span>
-                    More about me
-                  </span>
-                  <br />
-                  <span>https://stsewd.dev/</span>
-                </a>
-              </small>
-            </p>
-
-            <p>
-              <small class="text-center">
-                <a href="https://github.com/stsewd/talk-search-the-docs/">
-                  <span>
-                    Source code at GitHub <i class="fas fa-code-branch"></i>
-                  </span>
-                  <br />
-                  <span>https://github.com/stsewd/talk-search-the-docs/</span>
-                </a>
-              </small>
-            </p>
-
-            <p>
-              <small>
-                @stsewd
-                <a href="http://github.com/stsewd"><i class="fab fa-github"></i></a>
-                <a href="http://twitter.com/stsewd"><i class="fab fa-twitter"></i></a>
-              </small>
-            </p>
-          </footer>
-
-          <aside class="notes">
-          </aside>
-        </section>
-      </div>
+        <aside class="notes">
+        </aside>
+      </section>
     </div>
+  </div>
 
-    <script src="dist/reveal.js"></script>
-    <script src="plugin/notes/notes.js"></script>
-    <script src="plugin/markdown/markdown.js"></script>
-    <script src="plugin/highlight/highlight.js"></script>
-    <script>
-      // More info about initialization & config:
-      // - https://revealjs.com/initialization/
-      // - https://revealjs.com/config/
-      Reveal.initialize({
-        hash: true,
-        center: false,
-        maxScale: 0.7,
+  <script src="dist/reveal.js"></script>
+  <script src="plugin/notes/notes.js"></script>
+  <script src="plugin/markdown/markdown.js"></script>
+  <script src="plugin/highlight/highlight.js"></script>
+  <script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+      hash: true,
+      center: false,
+      maxScale: 0.7,
 
-        // Learn about plugins: https://revealjs.com/plugins/
-        plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
-      });
-    </script>
-  </body>
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+    });
+  </script>
+</body>
 
 </html>
