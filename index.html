@@ -18,13 +18,13 @@
   <link rel="stylesheet" href="plugin/fontawesome/css/all.css">
 
   <style type="text/css" media="screen">
-.red {
-  color: red;
-}
+    .red {
+      color: red;
+    }
 
-.maybe {
-  color: #888;
-}
+    .maybe {
+      color: #888;
+    }
   </style>
 </head>
 
@@ -118,12 +118,16 @@
             Ranking and ignoring pages
           </li>
           <li>
+            Analytics
+          </li>
+          <li>
             API
           </li>
           <li>
             <code>"exact match"</code> <code>prefix*</code> <code>fuzzy~2</code>
           </li>
         </ul>
+
         <p>
           <small>
             <a href="https://docs.readthedocs.io/page/server-side-search.html"
@@ -280,12 +284,13 @@
                   ignore:
                     - search.html
                     - 404.html
-            </code></pre>
+          </code></pre>
           <small>
             <a href="https://docs.readthedocs.io/page/config-file/v2.html"
               target="_blank">https://docs.readthedocs.io/page/config-file/v2.html</a>
           </small>
         </section>
+
         <section>
           <pre><code class="hlyaml" data-trim>
                 search:
@@ -295,25 +300,26 @@
                   ignore:
                     - search.html
                     - 404.html
-            </code></pre>
-          <small>
-            <a href="https://docs.readthedocs.io/page/config-file/v2.html" target="_blank">
-              https://docs.readthedocs.io/page/config-file/v2.html
-            </a>
-          </small>
+          </code></pre>
+
+          <p>
+            <small>
+              <a href="https://docs.readthedocs.io/page/config-file/v2.html" target="_blank">
+                https://docs.readthedocs.io/page/config-file/v2.html
+              </a>
+            </small>
+          </p>
         </section>
       </section>
 
       <section>
         <h2>Indexing the content</h2>
-        <p>
         <ul>
           <li>Get metadata from each file or the file itself</li>
           <li>Extract searchable content based on heuristics</li>
           <li>Remove navigation nodes and line numbers from code-blocks</li>
           <li>Divide content into sections</li>
         </ul>
-        </p>
 
         <p>
           <small>
@@ -395,7 +401,6 @@
       <section>
         <h2>Latency</h2>
 
-        <p>
         <ul>
           <li>
             <s>ES cloud (AWS) → RTD app (Azure)</s>
@@ -404,9 +409,7 @@
             ES cloud (Azure) → RTD app (Azure)
           </li>
         </ul>
-        </p>
 
-        <p>
         <ul class="fragment">
           <li>
             <s>ES cloud (AWS zone B) → RTD app (AWS zone A)</s>
@@ -415,7 +418,6 @@
             ES cloud (AWS zone A) → RTD app (AWS zone A)
           </li>
         </ul>
-        </p>
 
         <aside class="notes">
           <p>
@@ -502,7 +504,27 @@
             </small>
           </p>
         </section>
+      </section>
 
+      <section>
+        <h2>Other things</h2>
+
+        <ul>
+          <li>
+            Sponsored account of Elastic Cloud
+          </li>
+          <li>
+            Cached results via Cloudflare
+          </li>
+          <li>
+            Search as you type
+            <br />
+            <small>
+              <a href="https://readthedocs-sphinx-search.readthedocs.io/"
+                target="_blank">https://readthedocs-sphinx-search.readthedocs.io/</a>
+            </small>
+          </li>
+        </ul>
       </section>
 
       <section>
@@ -515,6 +537,9 @@
           <li>
             Weight page views into results
             <a href="https://github.com/readthedocs/readthedocs.org/pull/7297" target="_blank">#7297</a>
+          </li>
+          <li>
+            Use SSS by default for MkDocs
           </li>
           <li class="maybe">
             Better display for results from code blocks?
