@@ -139,7 +139,10 @@
           <ul>
             <li>Better search experience inside and outside the docs pages</li>
             <li>MkDocs integration is still experimental, let us know if you want to test it in your project!</li>
-            <li>Allows you to give priority to some pages over others, or ignore them from results</li>
+            <li>rtd allows you to group several projects as sub-projects of another</li>
+            <li>Allows you to give priority to some pages over others, or ignore them from results. This is like
+              tweaking your own search engine!</li>
+            <li>You can use server side search outside rtd via our API</li>
             <li>Simple query string syntax from ES</li>
           </ul>
         </aside>
@@ -188,7 +191,7 @@
               It was working, so why touch it?
             </li>
             <li>
-              Safwan participated as a google summer of code student.
+              Safwan participated as a Google summer of code student.
               Migrated ES from 1.3 (EOL 2016) to 6.x.
               Simple query string syntax support,
               improve results order,
@@ -196,7 +199,7 @@
               I joined the team that year!
             </li>
             <li>
-              Vaibhav, another google summer of code student.
+              Vaibhav, another Google summer of code student.
               Search as you type extension.
               Results linking to specific sections.
               Search analytics.
@@ -226,7 +229,7 @@
         </div>
         <div class="fragment">
           <p>↓</p>
-          <p>JSON metadata → Remove navigation items → Searchable text</p>
+          <p>JSON metadata → Searchable text</p>
         </div>
 
         <aside class="notes">
@@ -256,7 +259,8 @@
             <li>
               For MkDocs the process is almost the same,
               but we don't use an extension to get the main content,
-              but we parse each html file instead.
+              but instead we parse the search index or each html file.
+              We'll see more about this later.
             </li>
           </ul>
         </aside>
@@ -291,6 +295,10 @@
             <a href="https://docs.readthedocs.io/page/config-file/v2.html"
               target="_blank">https://docs.readthedocs.io/page/config-file/v2.html</a>
           </small>
+
+          <aside class="notes">
+            <p>This is how a config file looks like for a sphinx project, we'll be focusin on the search part.</p>
+          </aside>
         </section>
 
         <section>
@@ -311,6 +319,13 @@
               </a>
             </small>
           </p>
+
+          <aside class="notes">
+            <ul>
+              <li>Ranking is a map of a pattern to a ranking [-10, 10]. 0 means normal, not ignore.</li>
+              <li>Ignore is a list of patterns</li>
+            </ul>
+          </aside>
         </section>
       </section>
 
@@ -350,13 +365,16 @@
             </li>
             <li>
               For MkDocs we are testing two ways: using a search index file and indexing from HTML files.
+              Show an example from search/tests/data/mkdocs/.
             </li>
             <li>
-              We extract the searchable content based on some heuristics like aria roles and html tags.
+              We extract the searchable content based on some heuristics like aria roles and html tags ().
               Identify the main node of the content, remove irrelevant content like navigation items.
             </li>
             <li>
-              Remove line numbers from code blocks
+              Remove line numbers from code blocks, again this is done bases on heuristics like the common way of
+              representing line
+              numbers.
             </li>
           </ul>
         </aside>
@@ -367,6 +385,11 @@
         <p>
           Ignored page → not indexed page
         </p>
+
+        <aside class="notes">
+          This is simple,
+          if the page is ignored we don't index it.
+        </aside>
       </section>
 
       <section>
@@ -395,6 +418,26 @@
                 target="_blank">readthedocs/search/faceted_search.py</a>
             </small>
           </p>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Ranking can be done at index (boosting, specific fields) or search time,
+                they have their pros ans cons.
+                Faster queries, need re-index when the ranking value changes.
+                For our case at search time was more appropriate.
+              </li>
+              <li>
+                At search time with a function score query + script score.
+                This is done with the painless scripting language.
+              </li>
+              <li>
+                We map each ranking to a ES score,
+                keeping in mind to still show relevant results
+                independently from the ranking.
+              </li>
+            </ul>
+          </aside>
         </section>
 
         <section>
@@ -415,6 +458,21 @@
                 target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting-painless.html</a>
             </small>
           </p>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                This is how a painless script looks like.
+                Is almost like java,
+                so if you aren't familiar with java o haven't coded in java in a long time (like myself!),
+                it may not be that painless to code in...
+              </li>
+              <li>
+                0.8 and 1.3 are magic numbers! They were calculated in base to our boosting values (2.0, 1.5).
+                We return the final score by multiplying it with the ranking.
+              </li>
+            </ul>
+          </aside>
         </section>
       </section>
 
@@ -431,6 +489,21 @@
               target="_blank">https://docs.readthedocs.io/page/development/search-integration.html#overriding-the-default-search</a>
           </small>
         </p>
+
+        <aside class="notes">
+          <ul>
+            <li>
+              We inject a script in all docs pages,
+              part of this script is to hijack the default search,
+              so we use our SSS via our API.
+            </li>
+            <li>
+              We still need to keep a reference to the original search
+              as backup in case our api is down or in case our search
+              doesn't return results.
+            </li>
+          </ul>
+        </aside>
       </section>
 
       <section>
@@ -452,6 +525,11 @@
         </p>
         <p>
           <small>
+            <a href="https://github.com/readthedocs/readthedocs.org/blob/master/readthedocs/search/api.py"
+              target="_blank">readthedocs/search/api.py</a>
+          </small>
+          <br />
+          <small>
             <a href="https://docs.readthedocs.io/page/server-side-search.html#api" target="_blank">
               https://docs.readthedocs.io/page/server-side-search.html#api
             </a>
@@ -459,7 +537,12 @@
         </p>
 
         <aside class="notes">
-          <p>Show off page_size=10</p>
+          <ul>
+            <li>We used to return the same response from ES, but it can break compatibility</li>
+            <li>
+              Show off with page_size=10
+            </li>
+          </ul>
         </aside>
       </section>
 
@@ -491,9 +574,13 @@
 
         <aside class="notes">
           <p>
+            Our API response was very slow.
             .org was on azure, and ES was hosted on aws.
             We have now migrated to AWS, so we migrated ES again to aws.
-            .com is on aws, ES was aws... but on a different zone!
+            .com is on aws, ES was aws... But on a different zone!
+          </p>
+          <p>
+            In conclusion, make sure your ES deploy in on the same cloud provider and zone to improve latency.
           </p>
         </aside>
       </section>
@@ -504,25 +591,40 @@
         </h2>
         <section>
           <ul>
-            <li>
+            <li>Search for code and words</li>
+            <li class="fragment">
               <span class="red">theme</span>,
               <span class="red">theme</span>s,
               t<span class="red">e</span>mes,
               temes<span class="red">~1</span>
             </li>
-            <li>
-              <span class="red">test</span>,
-              <span class="red">test</span>ing
-            </li>
-            <li>
+            <li class="fragment">
               python<span class="red">.*</span>,
               <span class="red">*.</span>fail_on_warning
             </li>
-            <li>
+            <li class="fragment">
+              <span class="red">test</span>,
+              <span class="red">test</span>ing
+            </li>
+            <li class="fragment">
               <span class="red">index</span>,
               re<span class="red">index</span>,
               <span class="red">index</span>ing,
+              re<span class="red">index</span>ing
+            </li>
           </ul>
+
+          <aside class="notes">
+            <ul>
+              <li>Code is different from words, punctuation isn't mean to separate "words" in code</li>
+              <li>What I mean with partial terms? Let's look at the examples</li>
+              <li>Search for theme, themes, then with typo (we won't be using ~ too much, we don't know we have a typo!)
+              </li>
+              <li>Explicit suffix search, but explicit prefix search isn't supported</li>
+              <li>Implicit suffix search</li>
+              <li>Implicit suffix and prefix search</li>
+            </ul>
+          </aside>
         </section>
 
         <section>
@@ -545,6 +647,13 @@
                 Wildcard query
               </a>
             </li>
+            <li>
+              We can combine multiple types of queries,
+              but we don't always want to combine them all.
+            </li>
+            <li>
+              Single/simple search terms vs complex terms.
+            </li>
           </ul>
 
           <p>
@@ -553,6 +662,29 @@
                 target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/current/full-text-queries.html</a>
             </small>
           </p>
+          <aside class="notes">
+            <ul>
+              <li>Simple query string is useful when we know what we are looking for (refine our search)</li>
+              <li>
+                Fuzzy search is useful when we don't know what we are looking for
+                (or we don't know how to write it, specially if the isn't your lang)
+              </li>
+              <li>
+                We can have both type of searches
+              </li>
+              <li>
+                But how to we know when one is more relevant?
+              </li>
+              <li>
+                Again, more heuristics to find out!
+                Simple search terms don't have the special syntax,
+                and have just one word.
+              </li>
+              <li>
+                Maybe we could add the string length to the heuristics?
+              </li>
+            </ul>
+          </aside>
         </section>
 
         <section>
@@ -573,6 +705,30 @@
                 target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/current/keyword.html#wildcard-field-type</a>
             </small>
           </p>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Bad news, the docs mention that wildcard queries over text fields can be slow,
+                but maybe they aren't that bad... Let's try it!
+                502!
+              </li>
+              <li>
+                Good news, we have wildcard fields!
+              </li>
+              <li>
+                Bad news!
+                They are indexed in a different way,
+                we need to decide between each other!
+                We still want to have the other type of searches (break between words)!
+                (we haven't deployed this solution yet)
+              </li>
+              <li>
+                On .com there wasn't any downside in performance.
+                There we have a smaller index.
+              </li>
+            </ul>
+          </aside>
         </section>
       </section>
 
@@ -581,7 +737,7 @@
 
         <ul>
           <li>
-            Sponsored account of Elastic Cloud
+            Sponsored account of Elastic Cloud <i class="red fas fa-heart"></i>
           </li>
           <li>
             Cached results via Cloudflare
@@ -595,6 +751,10 @@
             </small>
           </li>
         </ul>
+
+        <aside class="notes">
+          Thank you very much Elastic!
+        </aside>
       </section>
 
       <section>
@@ -620,6 +780,11 @@
           <li class="maybe">Search by files patterns and other facets?</li>
           <li class="maybe">Ignore and ranking per sections?</li>
         </ul>
+
+        <aside class="notes">
+          Gray items are still pending on decisions or are just ideas,
+          so they may not be implemented soon or ever.
+        </aside>
       </section>
 
       <section class="center">
