@@ -22,6 +22,18 @@
       color: red;
     }
 
+    .green {
+      color: green;
+    }
+
+    .blue {
+      color: #3e7bac;
+    }
+
+    .orange {
+      color: orange;
+    }
+
     .maybe {
       color: #888;
     }
@@ -50,7 +62,7 @@
         <ul>
           <li>Santos Gallegos</li>
           <li>Read the Docs</li>
-          <li>Python developer (web)</li>
+          <li><i class="blue fab fa-python"></i> developer (web)</li>
           <li>@stsewd</li>
         </ul>
       </section>
@@ -67,7 +79,7 @@
           <li>
             Created around 2010
           </li>
-          <li>More than 100K projects</li>
+          <li>More than 100K <i class="fab fa-osi"></i> projects</li>
           <li>Extra features</li>
           <li>
             <a href="https://readthedocs.org/" target="_blank">https://readthedocs.org/</a>
@@ -103,7 +115,7 @@
       </section>
 
       <section>
-        <h2>Server Side Search</h2>
+        <h2>Server Side Search <i class="fas fa-search"></i></h2>
         <ul>
           <li>
             Better search experience
@@ -129,6 +141,11 @@
         </ul>
 
         <p>
+          <br />
+          <small>
+            <i class="blue fas fa-link"></i>
+          </small>
+          <br />
           <small>
             <a href="https://docs.readthedocs.io/page/server-side-search.html"
               target="_blank">https://docs.readthedocs.io/page/server-side-search.html</a>
@@ -149,7 +166,7 @@
       </section>
 
       <section>
-        <h2>A brief history about search at RTD</h2>
+        <h2><i class="fas fa-history"></i> A brief history about search at RTD</h2>
         <ul>
           <li class="fragment">
             <strong>2013</strong>
@@ -217,7 +234,7 @@
       </section>
 
       <section>
-        <h2>Indexing Process</h2>
+        <h2>Indexing Process <i class="far fa-file-code"></i></h2>
         <p class="fragment">Parse configuration file</p>
         <div class="fragment">
           <p>↓</p>
@@ -291,10 +308,17 @@
                     - search.html
                     - 404.html
           </code></pre>
-          <small>
-            <a href="https://docs.readthedocs.io/page/config-file/v2.html"
-              target="_blank">https://docs.readthedocs.io/page/config-file/v2.html</a>
-          </small>
+          <p>
+            <br />
+            <small>
+              <i class="blue fas fa-link"></i>
+            </small>
+            <br />
+            <small>
+              <a href="https://docs.readthedocs.io/page/config-file/v2.html"
+                target="_blank">https://docs.readthedocs.io/page/config-file/v2.html</a>
+            </small>
+          </p>
 
           <aside class="notes">
             <p>This is how a config file looks like for a sphinx project, we'll be focusin on the search part.</p>
@@ -313,9 +337,14 @@
           </code></pre>
 
           <p>
+            <br />
             <small>
-              <a href="https://docs.readthedocs.io/page/config-file/v2.html" target="_blank">
-                https://docs.readthedocs.io/page/config-file/v2.html
+              <i class="blue fas fa-link"></i>
+            </small>
+            <br />
+            <small>
+              <a href="https://docs.readthedocs.io/page/config-file/v2.html#search" target="_blank">
+                https://docs.readthedocs.io/en/stable/config-file/v2.html#search
               </a>
             </small>
           </p>
@@ -339,6 +368,11 @@
         </ul>
 
         <p>
+          <br />
+          <small>
+            <i class="blue fas fa-link"></i>
+          </small>
+          <br />
           <small>
             <a href="https://github.com/readthedocs/readthedocs.org/blob/master/readthedocs/search/parsers.py"
               target="_blank">
@@ -384,6 +418,7 @@
         <h2>Ignoring pages</h2>
         <p>
           Ignored page → not indexed page
+          <i class="maybe fas fa-check-double"></i>
         </p>
 
         <aside class="notes">
@@ -393,7 +428,7 @@
       </section>
 
       <section>
-        <h2>Ranking pages</h2>
+        <h2><i class="fas fa-sort-numeric-down"></i> Ranking pages</h2>
         <section>
           <ul>
             <li>Ranking can be done at index or search time</li>
@@ -413,6 +448,11 @@
             </li>
           </ul>
           <p>
+            <br />
+            <small>
+              <i class="blue fas fa-link"></i>
+            </small>
+            <br />
             <small>
               <a href="https://github.com/readthedocs/readthedocs.org/blob/master/readthedocs/search/faceted_search.py"
                 target="_blank">readthedocs/search/faceted_search.py</a>
@@ -453,6 +493,11 @@
             return params.ranking[rank + 10] * _score;
           </code></pre>
           <p>
+            <br />
+            <small>
+              <i class="blue fas fa-link"></i>
+            </small>
+            <br />
             <small>
               <a href="https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting-painless.html"
                 target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting-painless.html</a>
@@ -484,6 +529,11 @@
         </ul>
 
         <p>
+          <br />
+          <small>
+            <i class="blue fas fa-link"></i>
+          </small>
+          <br />
           <small>
             <a href="https://docs.readthedocs.io/page/development/search-integration.html#overriding-the-default-search"
               target="_blank">https://docs.readthedocs.io/page/development/search-integration.html#overriding-the-default-search</a>
@@ -519,11 +569,16 @@
         </ul>
 
         <p>
-          <a href="https://docs.rtfd.io/_/api/v2/search/?project=docs&version=latest&q=api" target="_blank">
-            https://docs.rtfd.io/_/api/v2/search/?project=docs&version=latest&q=api
+          <a href="https://docs.readthedocs.io/_/api/v2/search/?project=docs&version=latest&q=api" target="_blank">
+            docs.readthedocs.io/_/api/v2/search/?project=docs&version=latest&q=api
           </a>
         </p>
         <p>
+          <br />
+          <small>
+            <i class="blue fas fa-link"></i>
+          </small>
+          <br />
           <small>
             <a href="https://github.com/readthedocs/readthedocs.org/blob/master/readthedocs/search/api.py"
               target="_blank">readthedocs/search/api.py</a>
@@ -548,11 +603,11 @@
 
       <section class="center">
         <h1>Problems</h1>
-        <small class="fragment">And solutions!</small>
+        <small class="green fragment">And solutions!</small>
       </section>
 
       <section>
-        <h2>Latency</h2>
+        <h2>Latency 🐌</h2>
 
         <ul>
           <li>
@@ -657,6 +712,11 @@
           </ul>
 
           <p>
+            <br />
+            <small>
+              <i class="blue fas fa-link"></i>
+            </small>
+            <br />
             <small>
               <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/full-text-queries.html"
                 target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/current/full-text-queries.html</a>
@@ -689,17 +749,25 @@
 
         <section>
           <ul>
-            <li>Wildcard queries over <strong>Text fields</strong> can be slow...</li>
-            <li class="fragment">Wildcard queries over <strong>Wildcard fields</strong> are fast!</li>
+            <li><i class="red fas fa-times"></i> Wildcard queries over <strong>Text fields</strong> can be slow...</li>
+            <li class="fragment"><i class="green fas fa-check"></i> Wildcard queries over <strong>Wildcard
+                fields</strong> are fast!</li>
             <li class="fragment">
+              <i class="red fas fa-times"></i>
               Wildcard or Text field?...
             </li>
             <li class="fragment">
+              <i class="green fas fa-check"></i>
               Both! Multi fields
               (<a href="https://github.com/readthedocs/readthedocs.org/pull/7613" target="_blank">#7613</a>)
             </li>
           </ul>
           <p>
+            <br />
+            <small>
+              <i class="blue fas fa-link"></i>
+            </small>
+            <br />
             <small>
               <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/keyword.html#wildcard-field-type"
                 target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/current/keyword.html#wildcard-field-type</a>
@@ -741,6 +809,7 @@
           </li>
           <li>
             Cached results via Cloudflare
+            <i class="orange fab fa-cloudflare"></i>
           </li>
           <li>
             Search as you type
@@ -771,14 +840,14 @@
           <li>
             Use SSS by default for MkDocs
           </li>
+          <li class="maybe">Enable search indexing for pull requests previews?</li>
+          <li class="maybe">Ignore and ranking per sections?</li>
           <li class="maybe">
             Better display for results from code blocks?
             <a href="https://github.com/readthedocs/readthedocs.org/pull/7112" target="_blank">#7112</a>
           </li>
-          <li class="maybe">Enable search indexing for pull requests previews?</li>
           <li class="maybe">Search for images and code snippets?</li>
           <li class="maybe">Search by files patterns and other facets?</li>
-          <li class="maybe">Ignore and ranking per sections?</li>
         </ul>
 
         <aside class="notes">
