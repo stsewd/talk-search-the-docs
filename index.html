@@ -158,7 +158,7 @@
             <strong>2018</strong>
             Safwan Rahman
             <a href="https://github.com/safwanrahman" target="_blank">@safwanrahman</a>
-            <br/>
+            <br />
             <small>
               <a href="https://blog.readthedocs.com/search-improvements/"
                 target="_blank">https://blog.readthedocs.com/search-improvements/</a>
@@ -168,7 +168,7 @@
             <strong>2019</strong>
             Vaibhav Gupta
             <a href="https://github.com/dojutsu-user" target="_blank">@dojutsu-user</a>
-            <br/>
+            <br />
             <small>
               <a href="https://blog.readthedocs.com/improved-search-and-search-as-you-type/"
                 target="_blank">https://blog.readthedocs.com/improved-search-and-search-as-you-type/</a>
@@ -363,36 +363,104 @@
       </section>
 
       <section>
-        <h2>Ranking and ignoring pages</h2>
+        <h2>Ignoring pages</h2>
         <p>
-          Painless script
+          Ignored page → not indexed page
         </p>
+      </section>
+
+      <section>
+        <h2>Ranking pages</h2>
+        <section>
+          <ul>
+            <li>Ranking can be done at index or search time</li>
+            <li>
+              Ranking at search time with
+              <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html"
+                target="_blank">function score query</a>
+            </li>
+            <li>
+              Painless script
+            </li>
+            <li>
+              Map each ranking [-10, 10] to a score
+            </li>
+            <li>
+              Play nice with custom boosting
+            </li>
+          </ul>
+          <p>
+            <small>
+              <a href="https://github.com/readthedocs/readthedocs.org/blob/master/readthedocs/search/faceted_search.py"
+                target="_blank">readthedocs/search/faceted_search.py</a>
+            </small>
+          </p>
+        </section>
+
+        <section>
+          <p>
+            <em>Painless script</em>
+          </p>
+          <pre><code class="hljava" data-trim>
+            // ranking: [0.01, .. 0.8, 1, 1,3, .. 2]
+            int rank =
+              doc['rank'].size() == 0 ?
+              0 : (int) doc['rank'].value;
+
+            return params.ranking[rank + 10] * _score;
+          </code></pre>
+          <p>
+            <small>
+              <a href="https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting-painless.html"
+                target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting-painless.html</a>
+            </small>
+          </p>
+        </section>
       </section>
 
       <section>
         <h2>Overriding the default search</h2>
+        <ul>
+          <li>Hijack the search call via Javascript</li>
+          <li>Keep a reference to the old search for backup</li>
+        </ul>
 
-        <small>
-          <a href="https://docs.readthedocs.io/page/development/search-integration.html#overriding-the-default-search"
-            target="_blank">https://docs.readthedocs.io/page/development/search-integration.html#overriding-the-default-search</a>
-        </small>
+        <p>
+          <small>
+            <a href="https://docs.readthedocs.io/page/development/search-integration.html#overriding-the-default-search"
+              target="_blank">https://docs.readthedocs.io/page/development/search-integration.html#overriding-the-default-search</a>
+          </small>
+        </p>
       </section>
 
       <section>
         <h2>API</h2>
+        <ul>
+          <li>DRF wrapper around the ES response</li>
+          <li>
+            Serializers
+          </li>
+          <li>
+            Pagination
+          </li>
+        </ul>
+
         <p>
-          Pagination, wrapper around ES.
-        </p>
-        <p>
-          <a href="https://docs.readthedocs.io/_/api/v2/search/?project=docs&version=latest&q=api" target="_blank">
-            https://docs.readthedocs.io/_/api/v2/search/?project=docs&version=latest&q=api
+          <a href="https://docs.rtfd.io/_/api/v2/search/?project=docs&version=latest&q=api" target="_blank">
+            https://docs.rtfd.io/_/api/v2/search/?project=docs&version=latest&q=api
           </a>
         </p>
-        <small>
-          <a href="https://docs.readthedocs.io/page/server-side-search.html#api" target="_blank">
-            https://docs.readthedocs.io/page/server-side-search.html#api
-          </a>
-        </small>
+        <p>
+          <small>
+            <a href="https://docs.readthedocs.io/page/server-side-search.html#api" target="_blank">
+              https://docs.readthedocs.io/page/server-side-search.html#api
+            </a>
+          </small>
+        </p>
+
+        <aside class="notes">
+          <p>Show off page_size=10</p>
+        </aside>
       </section>
 
       <section class="center">
@@ -547,6 +615,7 @@
             Better display for results from code blocks?
             <a href="https://github.com/readthedocs/readthedocs.org/pull/7112" target="_blank">#7112</a>
           </li>
+          <li class="maybe">Enable search indexing for pull requests previews?</li>
           <li class="maybe">Search for images and code snippets?</li>
           <li class="maybe">Search by files patterns and other facets?</li>
           <li class="maybe">Ignore and ranking per sections?</li>
