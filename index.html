@@ -265,7 +265,7 @@
               <a href="http://www.url.com" target="_blank">https://github.com/readthedocs/readthedocs-sphinx-ext</a>
             </li>
             <li>
-              Go through each html file and save it on our DB and set the given ranking and set it as ignore or not.
+              Go through each html file and save it on our DB and set the given ranking and set it as ignored or not.
             </li>
             <li>
               In a later step we go again over each html file,
@@ -321,7 +321,7 @@
           </p>
 
           <aside class="notes">
-            <p>This is how a config file looks like for a sphinx project, we'll be focusin on the search part.</p>
+            <p>This is how a config file looks like for a sphinx project, we'll be focusing on the search part.</p>
           </aside>
         </section>
 
@@ -364,7 +364,7 @@
           <li>Get metadata from each file or the file itself</li>
           <li>Extract searchable content based on heuristics</li>
           <li>Remove navigation nodes and line numbers from code-blocks</li>
-          <li>Divide content into sections</li>
+          <li>Divide content into sections and domains (Sphinx)</li>
         </ul>
 
         <p>
@@ -402,13 +402,17 @@
               Show an example from search/tests/data/mkdocs/.
             </li>
             <li>
-              We extract the searchable content based on some heuristics like aria roles and html tags ().
+              We extract the searchable content based on some heuristics like aria roles (from accessibility) and html
+              tags (semantic web!).
               Identify the main node of the content, remove irrelevant content like navigation items.
             </li>
             <li>
-              Remove line numbers from code blocks, again this is done bases on heuristics like the common way of
-              representing line
-              numbers.
+              Remove line numbers from code blocks, again this is done based on heuristics like the common way of
+              representing code-blocks with numbers.
+            </li>
+            <li>
+              Domains are specific of Sphinx, sphinx domains,
+              like documentation extracted from source code.
             </li>
           </ul>
         </aside>
@@ -508,7 +512,7 @@
             <ul>
               <li>
                 This is how a painless script looks like.
-                Is almost like java,
+                It's almost like java,
                 so if you aren't familiar with java o haven't coded in java in a long time (like myself!),
                 it may not be that painless to code in...
               </li>
@@ -544,7 +548,7 @@
           <ul>
             <li>
               We inject a script in all docs pages,
-              part of this script is to hijack the default search,
+              part of what this script does is hijack the default search,
               so we use our SSS via our API.
             </li>
             <li>
@@ -628,15 +632,22 @@
         </ul>
 
         <aside class="notes">
-          <p>
-            Our API response was very slow.
-            .org was on azure, and ES was hosted on aws.
-            We have now migrated to AWS, so we migrated ES again to aws.
-            .com is on aws, ES was aws... But on a different zone!
-          </p>
-          <p>
-            In conclusion, make sure your ES deploy in on the same cloud provider and zone to improve latency.
-          </p>
+          <ul>
+            <li>
+              Our API response was very slow.
+            </li>
+            <li>Elastic Cloud let's you choose were to host your ES instance</li>
+            <li>
+              .org was on azure, and ES was hosted on aws.
+              We have now migrated to AWS, so we migrated ES again to aws.
+            </li>
+            <li>
+              .com is on aws, ES was aws... But on a different zone!
+            </li>
+            <li>
+              In conclusion, make sure your ES deploy in on the same cloud provider and zone to improve latency.
+            </li>
+          </ul>
         </aside>
       </section>
 
@@ -671,6 +682,7 @@
 
           <aside class="notes">
             <ul>
+              <li>We host technical documentation, so users search for code and words!</li>
               <li>Code is different from words, punctuation isn't mean to separate "words" in code</li>
               <li>What I mean with partial terms? Let's look at the examples</li>
               <li>Search for theme, themes, then with typo (we won't be using ~ too much, we don't know we have a typo!)
@@ -730,10 +742,13 @@
                 (or we don't know how to write it, specially if the isn't your lang)
               </li>
               <li>
-                We can have both type of searches
+                Wildcard queries support prefix and suffix searches!
               </li>
               <li>
-                But how to we know when one is more relevant?
+                We can combine several type of searches in one
+              </li>
+              <li>
+                But how to we know when to use one or combine several?
               </li>
               <li>
                 Again, more heuristics to find out!
@@ -822,7 +837,11 @@
         </ul>
 
         <aside class="notes">
-          Thank you very much Elastic!
+          <ul>
+            <li>Thank you very much Elastic!</li>
+            <li>If you (or anyone else) search the same term, you'll get a cached response</li>
+            <li>The contents is static, so caching is fine, we also purge the cache when a new build happens</li>
+          </ul>
         </aside>
       </section>
 
