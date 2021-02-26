@@ -34,7 +34,7 @@
       color: orange;
     }
 
-    .maybe {
+    .gray {
       color: #888;
     }
   </style>
@@ -54,6 +54,11 @@
             <a href="http://github.com/stsewd" target="_blank"><i class="fab fa-github"></i></a>
             <a href="http://twitter.com/stsewd" target="_blank"><i class="fab fa-twitter"></i></a>
           </small>
+        </p>
+
+        <p class="gray">
+          <i class="fas fa-keyboard"></i>
+          Navigate with <kbd>[ space ]</kbd>
         </p>
       </section>
 
@@ -360,69 +365,96 @@
 
       <section>
         <h2>Indexing the content</h2>
-        <ul>
-          <li>Get metadata from each file or the file itself</li>
-          <li>Extract searchable content based on heuristics</li>
-          <li>Remove navigation nodes and line numbers from code-blocks</li>
-          <li>Divide content into sections and domains (Sphinx)</li>
-        </ul>
-
-        <p>
-          <br />
-          <small>
-            <i class="blue fas fa-link"></i>
-          </small>
-          <br />
-          <small>
-            <a href="https://github.com/readthedocs/readthedocs.org/blob/master/readthedocs/search/parsers.py"
-              target="_blank">
-              readthedocs/search/parsers.py
-            </a>
-          </small>
-          <br />
-          <small>
-            <a href="https://github.com/readthedocs/readthedocs.org/blob/master/readthedocs/search/documents.py"
-              target="_blank">readthedocs/search/documents.py</a>
-          </small>
-          <br />
-          <small>
-            <a href="https://docs.readthedocs.io/page/development/search-integration.html"
-              target="_blank">https://docs.readthedocs.io/page/development/search-integration.html</a>
-          </small>
-        </p>
-
-        <aside class="notes">
+        <section>
           <ul>
-            <li>
-              For sphinx we use the json metadata file.
-              Show an example from search/tests/data/sphinx/in/page.json.
-            </li>
-            <li>
-              For MkDocs we are testing two ways: using a search index file and indexing from HTML files.
-              Show an example from search/tests/data/mkdocs/.
-            </li>
-            <li>
-              We extract the searchable content based on some heuristics like aria roles (from accessibility) and html
-              tags (semantic web!).
-              Identify the main node of the content, remove irrelevant content like navigation items.
-            </li>
-            <li>
-              Remove line numbers from code blocks, again this is done based on heuristics like the common way of
-              representing code-blocks with numbers.
-            </li>
-            <li>
-              Domains are specific of Sphinx, sphinx domains,
-              like documentation extracted from source code.
-            </li>
+            <li>Get metadata from each file or the file itself</li>
+            <li>Extract searchable content based on heuristics</li>
+            <li>Remove navigation nodes and line numbers from code-blocks</li>
+            <li>Divide content into sections and domains (Sphinx)</li>
           </ul>
-        </aside>
+
+          <p>
+            <br />
+            <small>
+              <i class="blue fas fa-link"></i>
+            </small>
+            <br />
+            <small>
+              <a href="https://github.com/readthedocs/readthedocs.org/blob/master/readthedocs/search/parsers.py"
+                target="_blank">
+                readthedocs/search/parsers.py
+              </a>
+            </small>
+            <br />
+            <small>
+              <a href="https://github.com/readthedocs/readthedocs.org/blob/master/readthedocs/search/documents.py"
+                target="_blank">readthedocs/search/documents.py</a>
+            </small>
+            <br />
+            <small>
+              <a href="https://docs.readthedocs.io/page/development/search-integration.html"
+                target="_blank">https://docs.readthedocs.io/page/development/search-integration.html</a>
+            </small>
+          </p>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                For sphinx we use the json metadata file.
+                Show an example from search/tests/data/sphinx/in/page.json.
+              </li>
+              <li>
+                For MkDocs we are testing two ways: using a search index file and indexing from HTML files.
+                Show an example from search/tests/data/mkdocs/.
+              </li>
+              <li>
+                We extract the searchable content based on some heuristics like aria roles (from accessibility) and html
+                tags (semantic web!).
+                Identify the main node of the content, remove irrelevant content like navigation items.
+              </li>
+              <li>
+                Remove line numbers from code blocks, again this is done based on heuristics like the common way of
+                representing code-blocks with numbers.
+              </li>
+              <li>
+                Domains are specific of Sphinx, sphinx domains,
+                like documentation extracted from source code.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <em>Identifying the main content node</em>
+          <img src="img/parse-main-node.png" alt="">
+        </section>
+
+        <section>
+          <em>Removing navigation nodes</em>
+          <img src="img/parse-remove-nav-nodes.png" alt="">
+        </section>
+
+        <section>
+          <em>Removing navigation nodes</em>
+          <img src="img/parse-remove-permalinks.png" alt="">
+        </section>
+
+        <section>
+          <em>Identifying sections</em>
+          <img src="img/parse-sections.png" alt="">
+        </section>
+
+        <section>
+          <em>Identifying nested sections</em>
+          <img src="img/parse-nested-sections.png" alt="">
+        </section>
       </section>
 
-      <section>
+      <section class="center">
         <h2>Ignoring pages</h2>
         <p>
           Ignored page → not indexed page
-          <i class="maybe fas fa-check-double"></i>
+          <i class="gray fas fa-check-double"></i>
         </p>
 
         <aside class="notes">
@@ -485,6 +517,47 @@
         </section>
 
         <section>
+          <em>Config file used at RTD</em>
+          <pre><code class="hlyaml" data-trim>
+          search:
+            ignore:
+              # Internal documentation
+              - development/design/*
+              - search.html
+              - 404.html
+           ranking:
+              # Deprecated content
+              api/v1.html: -1
+              config-file/v1.html: -1
+          
+              # Useful content, but not something we want most users finding
+              custom_installs/*: -6
+              changelog.html: -6
+          </code></pre>
+        </section>
+
+        <section>
+          <em>Ignoring pages from results</em>
+          <a href="img/search-ignoring-pages.png" target="_blank">
+            <img src="img/search-ignoring-pages.png" alt="">
+          </a>
+        </section>
+
+        <section>
+          <em>Page with rank -6</em>
+          <a href="img/search-lower-rank.png" target="_blank">
+            <img src="img/search-lower-rank.png" alt="">
+          </a>
+        </section>
+
+        <section>
+          <em>Tie breaker with rank -1</em>
+          <a href="img/search-rank-tie-breaker.png" target="_blank">
+            <img src="img/search-rank-tie-breaker.png" alt="">
+          </a>
+        </section>
+
+        <section>
           <p>
             <em>Painless script</em>
           </p>
@@ -527,37 +600,64 @@
 
       <section>
         <h2>Overriding the default search</h2>
-        <ul>
-          <li>Hijack the search call via Javascript</li>
-          <li>Keep a reference to the old search for backup</li>
-        </ul>
-
-        <p>
-          <br />
-          <small>
-            <i class="blue fas fa-link"></i>
-          </small>
-          <br />
-          <small>
-            <a href="https://docs.readthedocs.io/page/development/search-integration.html#overriding-the-default-search"
-              target="_blank">https://docs.readthedocs.io/page/development/search-integration.html#overriding-the-default-search</a>
-          </small>
-        </p>
-
-        <aside class="notes">
+        <section>
           <ul>
-            <li>
-              We inject a script in all docs pages,
-              part of what this script does is hijack the default search,
-              so we use our SSS via our API.
-            </li>
-            <li>
-              We still need to keep a reference to the original search
-              as backup in case our api is down or in case our search
-              doesn't return results.
-            </li>
+            <li>Hijack the search call via Javascript</li>
+            <li>Keep a reference to the old search for backup</li>
           </ul>
-        </aside>
+
+          <p>
+            <br />
+            <small>
+              <i class="blue fas fa-link"></i>
+            </small>
+            <br />
+            <small>
+              <a href="https://docs.readthedocs.io/page/development/search-integration.html#overriding-the-default-search"
+                target="_blank">https://docs.readthedocs.io/page/development/search-integration.html#overriding-the-default-search</a>
+            </small>
+          </p>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                We inject a script in all docs pages,
+                part of what this script does is hijack the default search,
+                so we use our SSS via our API.
+              </li>
+              <li>
+                We still need to keep a reference to the original search
+                as backup in case our api is down or in case our search
+                doesn't return results.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+
+          <pre><code class="hljs" data-trim>
+          var original_search = Search.query;
+
+          function search_override(query) {
+            var results = fetch_resuls(query);
+            if (results) {
+                for (var i = 0; i &le; results.length; i += 1) {
+                  var result = process_result(results[i]);
+                  Search.output.append(result);
+                }
+            } else {
+                original_search(query);
+            }
+          }
+
+          Search.query = search_override;
+
+          $(document).ready(function() {
+            Search.init();
+          });
+          </code></pre>
+        </section>
       </section>
 
       <section>
@@ -859,14 +959,14 @@
           <li>
             Use SSS by default for MkDocs
           </li>
-          <li class="maybe">Enable search indexing for pull requests previews?</li>
-          <li class="maybe">Ignore and ranking per sections?</li>
-          <li class="maybe">
+          <li class="gray">Enable search indexing for pull requests previews?</li>
+          <li class="gray">Ignore and ranking per sections?</li>
+          <li class="gray">
             Better display for results from code blocks?
             <a href="https://github.com/readthedocs/readthedocs.org/pull/7112" target="_blank">#7112</a>
           </li>
-          <li class="maybe">Search for images and code snippets?</li>
-          <li class="maybe">Search by files patterns and other facets?</li>
+          <li class="gray">Search for images and code snippets?</li>
+          <li class="gray">Search by files patterns and other facets?</li>
         </ul>
 
         <aside class="notes">

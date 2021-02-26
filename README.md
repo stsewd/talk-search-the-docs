@@ -4,3 +4,8 @@ Talk about how Read the Docs uses Elastic Search for the Elastic San Diego commu
 https://community.elastic.co/events/details/elastic-san-diego-presents-search-the-docs-elasticsearch-at-read-the-docs/#/
 
 Slides powered by [reveal.js](https://github.com/hakimel/reveal.js/).
+
+## Usage
+
+- Navigate with <kbd>space</kbd>.
+- Enter presenter mode with <kbd>s</kbd>.
