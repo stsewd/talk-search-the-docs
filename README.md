@@ -8,4 +8,4 @@ Slides powered by [reveal.js](https://github.com/hakimel/reveal.js/).
 ## Usage
 
 - Navigate with <kbd>space</kbd>.
-- Enter presenter mode with <kbd>s</kbd>.
+- Open the speaker view with <kbd>s</kbd>.
