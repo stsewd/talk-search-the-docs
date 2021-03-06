@@ -101,14 +101,11 @@
           <ul>
             <li>
               A platform that allows you to built and host your documentation.
-              Versioning, translations, sub-projects, and more!
             </li>
             <li>Created by Eric Holscher and others</li>
             <li>
               More than hundred thousand OS projects.
-              Flask, tox, nox, pip, requests.
-              https://pip.pypa.io/en/stable/
-              https://www.sphinx-doc.org/en/master/
+              Flask, tox, pip, requests, pip, even sphinx itself!
             </li>
             <li>
               If you are a python dev,
@@ -116,6 +113,9 @@
             </li>
             <li>
               Easy to recognize by this version selector to the bottom right of pages.
+            </li>
+            <li>
+              Versioning, translations, sub-projects, server side search, and more!
             </li>
           </ul>
         </aside>
@@ -403,11 +403,9 @@
             <ul>
               <li>
                 For sphinx we use the json metadata file.
-                Show an example from search/tests/data/sphinx/in/page.json.
               </li>
               <li>
                 For MkDocs we are testing two ways: using a search index file and indexing from HTML files.
-                Show an example from search/tests/data/mkdocs/.
               </li>
               <li>
                 We extract the searchable content based on some heuristics like aria roles (from accessibility) and html
@@ -431,6 +429,13 @@
           <a href="img/parse-main-node.png" target="_blank">
             <img src="img/parse-main-node.png" alt="">
           </a>
+
+          <aside class="notes">
+            <p>
+              We identify the main node based on the main role.
+              We don't want to include things like navbar, footer, etc.
+            </p>
+          </aside>
         </section>
 
         <section>
@@ -438,6 +443,14 @@
           <a href="img/parse-remove-nav-nodes.png" target="_blank">
             <img src="img/parse-remove-nav-nodes.png" alt="">
           </a>
+
+          <aside class="notes">
+            <p>
+              We remove navigation nodes that aren't part of the content.
+              This is based on heuristics like we say,
+              like the navigation role or nav tags.
+            </p>
+          </aside>
         </section>
 
         <section>
@@ -445,6 +458,9 @@
           <a href="img/parse-remove-permalinks.png" target="_blank">
             <img src="img/parse-remove-permalinks.png" alt="">
           </a>
+          <aside class="notes">
+            <p>We remove adorments like permalinks, this is the symbols that appear at the side of titles.</p>
+          </aside>
         </section>
 
         <section>
@@ -452,6 +468,13 @@
           <a href="img/parse-sections.png" target="_blank">
             <img src="img/parse-sections.png" alt="">
           </a>
+
+          <aside class="notes">
+            <p>
+              Sections are a title followed by some content.
+              Sections can be followed by each other.
+            </p>
+          </aside>
         </section>
 
         <section>
@@ -459,6 +482,10 @@
           <a href="img/parse-nested-sections.png" target="_blank">
             <img src="img/parse-nested-sections.png" alt="">
           </a>
+
+          <aside class="notes">
+            <p>Sections can also be nested.</p>
+          </aside>
         </section>
       </section>
 
@@ -472,6 +499,7 @@
         <aside class="notes">
           This is simple,
           if the page is ignored we don't index it.
+          Sorry we are ignoring you, pages :(
         </aside>
       </section>
 
@@ -541,11 +569,30 @@
               # Deprecated content
               api/v1.html: -1
               config-file/v1.html: -1
-          
+
               # Useful content, but not something we want most users finding
               custom_installs/*: -6
               changelog.html: -6
           </code></pre>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                This is how a real life example of a config file for search looks like.
+              </li>
+              <li>
+                We ignore things like internal documentation that isn't relevant to users.
+              </li>
+              <li>
+                We use ranking to deprecate content.
+              </li>
+              <li>
+                We use ranking to show relevant results.
+                But still make them available.
+              </li>
+            </ul>
+            </p>
+          </aside>
         </section>
 
         <section>
@@ -553,13 +600,42 @@
           <a href="img/search-ignoring-pages.png" target="_blank">
             <img src="img/search-ignoring-pages.png" alt="">
           </a>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                To the left we are using the custom search options.
+                To the right is a without those custom options.
+              </li>
+              <li>
+                To the right we see the first result being a design document,
+                this contains information about the implementation of the feature,
+                rather than the documentation itself.
+              </li>
+              <li>
+                To the left we don't see that result at all.
+                The first result is the documentation about pull requests previews.
+              </li>
+            </ul>
+          </aside>
         </section>
 
         <section>
-          <em>Page with rank -6</em>
+          <em>Pages with rank -6 are still there</em>
           <a href="img/search-lower-rank.png" target="_blank">
             <img src="img/search-lower-rank.png" alt="">
           </a>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                To the left we are using the custom search options.
+                To the right is a without those custom options.
+              </li>
+              <li>Changelog has lower ranking, but is still shown on results</li>
+              <li>Pages with a lower ranking are still shown on relevant results</li>
+            </ul>
+          </aside>
         </section>
 
         <section>
@@ -567,6 +643,16 @@
           <a href="img/search-rank-tie-breaker.png" target="_blank">
             <img src="img/search-rank-tie-breaker.png" alt="">
           </a>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                To the left we are using the custom search options.
+                To the right is a without those custom options.
+              </li>
+              <li>Both v1 and v2 offer the same option, but v2 is shown first on the results</li>
+            </ul>
+          </aside>
         </section>
 
         <section>
@@ -596,14 +682,22 @@
           <aside class="notes">
             <ul>
               <li>
+                For ranking pages at search time we use a painless script
+              </li>
+              <li>
                 This is how a painless script looks like.
                 It's almost like java,
                 so if you aren't familiar with java o haven't coded in java in a long time (like myself!),
                 it may not be that painless to code in...
               </li>
               <li>
+                We map each ranking to a value between 0.001 to 2, that's 21 values.
+              </li>
+              <li>
+                We return the final score by multiplying the original score with the ranking.
+              </li>
+              <li>
                 0.8 and 1.3 are magic numbers! They were calculated in base to our boosting values (2.0, 1.5).
-                We return the final score by multiplying it with the ranking.
               </li>
             </ul>
           </aside>
@@ -616,6 +710,7 @@
           <ul>
             <li>Hijack the search call via Javascript</li>
             <li>Keep a reference to the old search for backup</li>
+            <li>If you ignore a page, you may still see it in the results from the backup search</li>
           </ul>
 
           <p>
@@ -669,6 +764,23 @@
             Search.init();
           });
           </code></pre>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                This is how the overriding is done.
+              </li>
+              <li>
+                We keep a reference to the original search
+              </li>
+              <li>
+                We declare a function that uses our api to retrieve and inject the results
+              </li>
+              <li>
+                The original search is called if the api doesn't return results or if an error happened.
+              </li>
+            </ul>
+          </aside>
         </section>
       </section>
 
@@ -707,7 +819,8 @@
 
         <aside class="notes">
           <ul>
-            <li>We used to return the same response from ES, but it can break compatibility</li>
+            <li>We used to return the same response from ES, but it can break compatibility when updating our ES version
+            </li>
             <li>
               Show off with page_size=10
             </li>
@@ -797,9 +910,10 @@
               <li>What I mean with partial terms? Let's look at the examples</li>
               <li>Search for theme, themes, then with typo (we won't be using ~ too much, we don't know we have a typo!)
               </li>
-              <li>Explicit suffix search, but explicit prefix search isn't supported</li>
+              <li>Explicit suffix search, but explicit prefix search isn't supported with the simple query string query
+              </li>
               <li>Implicit suffix search</li>
-              <li>Implicit suffix and prefix search</li>
+              <li>Implicit prefix or suffix search, or both!</li>
             </ul>
           </aside>
         </section>
@@ -950,7 +1064,10 @@
           <ul>
             <li>Thank you very much Elastic!</li>
             <li>If you (or anyone else) search the same term, you'll get a cached response</li>
-            <li>The contents is static, so caching is fine, we also purge the cache when a new build happens</li>
+            <li>
+              The contents is static, so caching is fine, we also purge the cache when a new build happens. So you
+              won't get outdated results.
+            </li>
           </ul>
         </aside>
       </section>
@@ -980,9 +1097,26 @@
         </ul>
 
         <aside class="notes">
-          Gray items are still pending on decisions or are just ideas,
-          so they may not be implemented soon or ever.
+          <ul>
+            <li>
+              Gray items are still pending on decisions or are just ideas,
+              so they may not be implemented soon or ever.
+            </li>
+          </ul>
         </aside>
+      </section>
+
+      <section class="center">
+        <h2>Showcase!</h2>
+
+        <ul>
+          <li>
+            MkDocs SSS vs MkDocs
+          </li>
+          <li>
+            Sphinx SSS vs Sphinx
+          </li>
+        </ul>
       </section>
 
       <section class="center">
